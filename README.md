@@ -6,7 +6,7 @@ CPS 350: Assignment 5 Due 11:55 pm, Tuesday, 11/24/2015 (200 pts) This is a team
 The purpose of this assignment is to implement sorting algorithms for the autocomplete application.   
 
 
-2. Description:  
+2.Description:  
 
 Write a program to implement autocomplete for a given set of N terms, where a term is a query string and an associated nonnegative weight. That is, given a prefix, find all queries that start with the given prefix, in descending order of weight. 
 
