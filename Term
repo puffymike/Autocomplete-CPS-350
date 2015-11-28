@@ -1,0 +1,85 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package assignment.pkg5;
+
+import java.util.Comparator;
+import java.lang.*;
+import java.util.*;
+
+/**
+ *
+ * @author Micah
+ */
+public class Term implements Comparable<Term> {
+
+    public String query;
+    public double weight;
+
+    /*Initializes a term with the given query string and weight*/
+    public Term(String query, long weight) {
+        if (query == null) {
+            throw new java.lang.NullPointerException();
+        }
+        if (weight < 0) {
+            throw new java.lang.IllegalArgumentException();
+        }
+        this.query = query;
+        this.weight = weight;
+    }
+    /*Compares the two terms in descending order by weight*/
+
+    public static Comparator<Term> byReverseWeightOrder() {
+        return new Comparator<Term>() {
+            public int compare(Term x, Term y) {
+                if (x.weight > y.weight) {
+                    return -1;
+                } else if (x.weight < y.weight) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        };
+
+    }
+    /*Compares the two terms in descending order but using only the first r characters
+     of each query.*/
+
+    public static Comparator<Term> byPrefixOrder(int r) {
+        final int x = r;
+        return new Comparator<Term>() {
+            public int compare(Term t1, Term t2) {
+                String s1 = t1.query;
+                String s2 = t2.query;
+                int minlength = s1.length() < s2.length() ? s1.length() : s2.length();
+                if (minlength >= r) {
+                    return s1.substring(0, x).compareTo(s2.substring(0, x));
+                } else if (s1.substring(0, minlength).compareTo(s2.substring(0, minlength)) == 0) {
+                    if (s1.length() == minlength) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                } else {
+                    return s1.substring(0, minlength).compareTo(s2.substring(0, minlength));
+                }
+            }
+        };
+    }
+
+    /*Compares the two terms in lexicographic order by query. */
+    public int compareTo(Term that) {
+        String s1 = this.query;
+        String s2 = that.query;
+        return s1.compareTo(s2);
+    }
+    /*Returns a string representation of this term in the following format: the 
+     weight, followed by a tab, followed by the query*/
+
+    public String toString() {
+        return Double.toString(this.weight) + "\t" + this.query;
+    }
+}
