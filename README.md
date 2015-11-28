@@ -69,7 +69,7 @@ In this part, you will implement a data type that provides autocomplete function
 
 public class Autocomplete {  // implement sorting algorithm in this class 
 
-    /* Initializes the data structure from the given array of terms. */     
+    /* Initializes the data structure from the given array of terms. */  
     public Autocomplete(Term[] terms)  
     
     /* Returns all terms that start with the given prefix, in descending order of weight. */     
