@@ -2,9 +2,12 @@
 CPS 350: Assignment 5 Due 11:55 pm, Tuesday, 11/24/2015 (200 pts) This is a team project. At most two students are in one team The top team will receive an award for this course ☺ ☺☺ ☺ No late submission will be accepted Receive 5 bonus points if turn in the complete work without errors at least one day before deadline Receive an F for this course if any academic dishonesty occurs.
 
 1.Purpose:
+
 The purpose of this assignment is to implement sorting algorithms for the autocomplete application.   
 
+
 2. Description:  
+
 Write a program to implement autocomplete for a given set of N terms, where a term is a query string and an associated nonnegative weight. That is, given a prefix, find all queries that start with the given prefix, in descending order of weight. 
 
 Autocomplete is pervasive in modern applications. As the user types, the program predicts the complete query (typically a word or phrase) that the user intends to type. Autocomplete is most effective when there are a limited number of likely queries. For example, the Internet Movie Database uses it to display the names of movies as the user types; search engines use it to display suggestions as the user enters web search queries; cell phones use it to speed up text input.   
@@ -12,6 +15,7 @@ In these examples, the application predicts how likely it is that the user is ty
 
 The performance of autocomplete functionality is critical in many systems. For example, consider a search engine which runs an autocomplete application on a server farm. According to one study, the application has only about 50ms to return a list of suggestions for it to be useful to the user. Moreover, in principle, it must perform this computation for every keystroke typed into the search bar and for every user! 
 In this assignment, you will implement autocomplete by sorting the terms by query string (with running time O(N log N) in sorting, or even better, where N is the of terms); binary searching to find all query strings that start with a given prefix (with running time O(log N)); and sorting the matching terms by weight (with running time O(M log M) in sorting, where M is the number of matching terms). Finally display results for the user. The following shows the top seven queries (city names) that start with AI M with weights equal to their populations.  
+
 
 2.1. Part 1: autocomplete term (60 pts)  
 Write an immutable data type Term.java that represents an autocomplete term: a query string and an associated integer weight. You must implement the following API, which supports comparing terms by three different orders: lexicographic order by query string (the natural order); in descending order by weight (an alternate order); and lexicographic order by query string but using only the first r characters (a family of alternate orderings). The last order may seem a bit odd, but you will use it in Part 3 to find all query strings that start with a given prefix (of length r). 
