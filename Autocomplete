@@ -63,7 +63,7 @@ public class Autocomplete {
         // read in the terms from a file     
         String filename = args[0];
         File file = new File(filename);
-        FileInputStream in = new FileInputStream(file);
+        In in = new In(file);
         int N = in.readInt(); // read the number on the first line      
         Term[] terms = new Term[N];
         for (int i = 0; i < N; i++) {
