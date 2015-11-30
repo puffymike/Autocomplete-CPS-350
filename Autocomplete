@@ -59,25 +59,26 @@ public class Autocomplete {
         int j = BinarySearchDeluxe.lastIndexOf(quries, temp, Term.byPrefixOrder(prefix.length()));
         return j - i + 1;
     }
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         // read in the terms from a file     
         String filename = args[0];
-        File file = new File(filename);
-        In in = new In(file);
+        In in = new In(filename);
         int N = in.readInt(); // read the number on the first line      
         Term[] terms = new Term[N];
+        
         for (int i = 0; i < N; i++) {
             long weight = in.readLong(); // read the next weight        
             in.readChar(); // scan past the tab         
             String query = in.readLine(); // read the next query         
             terms[i] = new Term(query, weight); // construct the term     
         }
+
         /* read in user queries from standard input and print out the top k matching terms */
         int k = Integer.parseInt(args[1]);
         Scanner stdIn = new Scanner(System.in);
         Autocomplete autocomplete = new Autocomplete(terms);
         while (stdIn.hasNextLine()) {
-            String prefix = stdIn.nextLine(); //read in user input (i.e., prefix)       
+            String prefix = stdIn.readLine(); //read in user input (i.e., prefix)       
             Term[] results = autocomplete.allMatches(prefix);
             for (int i = 0; i < Math.min(k, results.length); i++) {
                 System.out.println(results[i]);
