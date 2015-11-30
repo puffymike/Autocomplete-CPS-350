@@ -80,6 +80,10 @@ import javax.swing.event.MouseInputAdapter;
 
 import java.text.Collator;
 import java.awt.Graphics;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 public class AutocompleteGUI extends JFrame {
 
@@ -215,7 +219,8 @@ public class AutocompleteGUI extends JFrame {
             Term[] terms = null;
             try {
                 In in = new In(filename);
-                String line0 = in.nextLine();
+               
+                String line0 = in.readLine();
                 if (line0 == null) {
                     System.err.println("Could not read line 0 of " + filename);
                     System.exit(1);
@@ -223,7 +228,7 @@ public class AutocompleteGUI extends JFrame {
                 int N = Integer.parseInt(line0);
                 terms = new Term[N];
                 for (int i = 0; i < N; i++) {
-                    String line = in.nextLine();
+                    String line = in.readLine();
                     if (line == null) {
                         System.err.println("Could not read line " + (i + 1) + " of " + filename);
                         System.exit(1);
