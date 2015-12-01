@@ -1,0 +1,12 @@
+a)	One of the known bugs that we found in our program, is that the search bar will only display the matching results of the first
+word. For example, if you searched “this”, and a key is “this is”, it will display if typed in “this”, but will not display if 
+typed in “is”. The only solution we had was to store the Strings from the file into arrays of strings and then compare them 
+accordingly. We saw that you handled most the inputs in the AutocompleteGUI and we didn’t want to mess anything up.
+
+b)	A couple serious problems that we incurred was getting the mouse curser to stay at the end of the word when there were no 
+corresponding keys that reassembled the users input. Although, stressful, we were able to find a solution. Another problem we had 
+was getting the program to ignore the cases of the inputs and keys, but again we found a solution. Another problem that we 
+encountered was when using the cities.txt, the comparisons can’t handle multiple words after the coma. 
+
+c)	We enjoyed doing the assignment but felt that it would have been a better learning experience if we could build the 
+application ourselves (Provided with more time)
