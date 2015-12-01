@@ -1,78 +1,105 @@
 package assignment.pkg5;
 
-import java.util.Comparator;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
+
 
 /**Authors: Micah Takagishi, Ben Stechschulte
  * Assignment: Auto-complete
  * 
- * This method implements a Binary Search to find the associated Keys that 
- * correspond to the users input text
+ * The purpose of this method is to find keys that start with the same prefix 
+ * in the stored Keys. It serves as an autocomplete in that the results appear
+ * if the user enters the beginning of a Key stored in Terms[]
  */
-public class BinarySearchDeluxe {
-    /* Returns the index of the first key in a[] that equals the search key, or 
-    -1 if no such key. */
+public class Autocomplete {
 
-    public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> comparator){
-        //throws null pointer exception if there is no key or comparator
-        if (a == null || key == null || comparator == null) {
-    		throw new java.lang.NullPointerException();
-    	}
-        
-        
-    	if (a.length == 0) {
-    		return -1;
-    	}
-    	int low = 0;
-    	int high = a.length - 1;
-        
-    	while (low + 1 < high) {
-    		int mid = low + (high - low)/2;
-    		if (comparator.compare(key, a[mid]) <= 0) {
-    			high = mid;
-    		} else {
-    			low = mid;
-    		}
-    	}
-        
-    	if (comparator.compare(key, a[low]) == 0) {
-    		return low;
-    	}
-        else if (comparator.compare(key, a[high]) == 0) {
-    		return high;
-    	}else{
-            return -1;
+    public Term[] quries;
+
+    /* Initializes the data structure from the given array of terms. */
+    public Autocomplete(Term[] terms) {
+        //Throws exception if there are no terms in the array
+        if (terms == null) {
+            throw new java.lang.NullPointerException();
         }
-    	
-    }   
-    
-    /* Returns the index of the last key in a[] that equals the search key, or -1 
-    if no such key. */
-    public static <Key> int lastIndexOf(Key[] a, Key key, Comparator<Key> comparator){
-        //throws null pointer exception if there is no key or comparator
-        if (a == null || key == null || comparator == null) {
-    		throw new java.lang.NullPointerException();
-    	}
-        
-    	if (a == null || a.length == 0) {
-    		return -1;
-    	}
-    	int low = 0;
-    	int high = a.length - 1;
-    	while (low + 1 < high) {
-    		int mid = low + (high - low)/2;
-    		if (comparator.compare(key, a[mid]) < 0) {
-    			high = mid;
-    		} else {
-    			low = mid;
-    		}
-    	}
-    	if (comparator.compare(key, a[high]) == 0) {
-    		return high;
-    	}else if (comparator.compare(key, a[low]) == 0) {
-    		return low;
-    	}else{
-            return -1;
+        this.quries = terms;
+        Arrays.sort(quries);//Sort queries using java util
+    }
+    /* Returns all terms that start with the given prefix, in descending order 
+     of weight. */
+
+    public Term[] allMatches(String prefix) {
+        //Throws null pointer exception if there are no terms to be found
+        if (prefix == null) {
+            throw new java.lang.NullPointerException();
         }
-    	
+        Term temp = new Term(prefix, 0);
+
+        int i = BinarySearchDeluxe.firstIndexOf(quries, temp, Term.byPrefixOrder(prefix.length()));
+        int j = BinarySearchDeluxe.lastIndexOf(quries, temp, Term.byPrefixOrder(prefix.length()));
+
+        if (i == -1 || j == -1) {
+            Term[] empty = {temp};
+            return empty;
+            //throw new java.lang.NullPointerException();
+        }
+
+        Term[] matches = new Term[j - i + 1];
+        matches = Arrays.copyOfRange(quries, i, j);
+        Arrays.sort(matches, Term.byReverseWeightOrder());
+        return matches;
+    }
+
+    // Return the number of terms that start with the given prefix.
+    public int numberOfMatches(String prefix) {
+        //Will throw a null pointer exception if no prefix is declared
+        if (prefix == null) {
+            throw new java.lang.NullPointerException();
+        }
+        Term temp = new Term(prefix, 0);
+        int i = BinarySearchDeluxe.firstIndexOf(quries, temp, Term.byPrefixOrder(prefix.length()));
+        int j = BinarySearchDeluxe.lastIndexOf(quries, temp, Term.byPrefixOrder(prefix.length()));
+        return j - i + 1;
+    }
+
+    public static void main(String[] args) {
+        // read in the terms from a file     
+
+        String filename = args[0];
+
+        In in = new In(filename);
+
+        int N = in.readInt(); // read the number on the first line
+
+        Term[] terms = new Term[N];
+
+        for (int i = 0; i < N; i++) {
+
+            long weight = in.readLong(); // read the next weight
+
+            in.readChar(); // scan past the tab
+
+            String query = in.readLine(); // read the next query
+
+
+            terms[i] = new Term(query, weight); // construct the term
+
+        }
+
+        /* read in user queries from standard input and print out the top k matching terms */
+        int k = Integer.parseInt(args[1]);
+        Scanner stdIn = new Scanner(System.in);
+        In cin = new In(stdIn);
+        Autocomplete autocomplete = new Autocomplete(terms);
+        
+        while (cin.hasNextLine()) {
+            String prefix = cin.readLine(); //read in user input (i.e., prefix)   
+            Term[] results = autocomplete.allMatches(prefix);
+            for (int i = 0; i < Math.min(k, results.length); i++) {
+                System.out.println(results[i]);
+            }
+        }
     }
 }
