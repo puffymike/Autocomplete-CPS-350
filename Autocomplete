@@ -39,7 +39,7 @@ public class Autocomplete {
         Term temp = new Term(prefix, 0);
 
         int i = BinarySearchDeluxe.firstIndexOf(quries, temp, Term.byPrefixOrder(prefix.length()));
-        int j = BinarySearchDeluxe.lastIndexOf(quries, temp, Term.byPrefixOrder(prefix.length()));
+        int j = BinarySearchDeluxe.lastIndexOf(quries, temp, Term.byPrefixOrder(prefix.length())) + 1;
 
         if (i == -1 || j == -1) {
             Term[] empty = {temp};
