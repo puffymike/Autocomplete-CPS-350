@@ -42,7 +42,9 @@ public class Autocomplete {
         int j = BinarySearchDeluxe.lastIndexOf(quries, temp, Term.byPrefixOrder(prefix.length()));
 
         if (i == -1 || j == -1) {
-            throw new java.lang.NullPointerException();
+            Term[] empty = {temp};
+            return empty;
+            //throw new java.lang.NullPointerException();
         }
 
         Term[] matches = new Term[j - i + 1];
