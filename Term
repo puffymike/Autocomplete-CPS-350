@@ -4,9 +4,11 @@ import java.util.Comparator;
 import java.lang.*;
 import java.util.*;
 
-/**
- *
- * @author Micah
+/**Authors: Micah Takagishi, Ben Stechschulte
+ * Assignment: Auto-complete
+ * 
+ * The purpose of this method is primarily to store and compare the keys stored from the
+ * file with the users input text
  */
 public class Term implements Comparable<Term> {
 
@@ -42,9 +44,9 @@ public class Term implements Comparable<Term> {
         };
 
     }
+    
     /*Compares the two terms in descending order but using only the first r characters
      of each query.*/
-
     public static Comparator<Term> byPrefixOrder(int textLength) {
         final int x = textLength;
         return new Comparator<Term>() {
@@ -61,9 +63,10 @@ public class Term implements Comparable<Term> {
                 } else {
                     minlength = string2.length();
                 }
-                
 
-                //Compare the substring of the larger string with the other string
+
+                //Compare the substring of the larger string with the smaller string
+                //Returns -1 if the two strings lengths are equal, returns 1 else wise
                 if (minlength >= textLength) {
                     return string1.substring(0, x).compareToIgnoreCase(string2.substring(0, x));
                 } else if (string1.substring(0, minlength).compareToIgnoreCase(string2.substring(0, minlength)) == 0) {
