@@ -1,24 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package assignment.pkg5;
 
 import java.util.Comparator;
 
-/**
- *
- * @author Micah
+/**Authors: Micah Takagishi, Ben Stechschulte
+ * Assignment: Auto-complete
+ * 
+ * This method implements a Binary Search to find the associated Keys that 
+ * correspond to the users input text
  */
 public class BinarySearchDeluxe {
     /* Returns the index of the first key in a[] that equals the search key, or 
     -1 if no such key. */
 
     public static <Key> int firstIndexOf(Key[] a, Key key, Comparator<Key> comparator){
+        //throws null pointer exception if there is no key or comparator
         if (a == null || key == null || comparator == null) {
     		throw new java.lang.NullPointerException();
     	}
+        
+        
     	if (a.length == 0) {
     		return -1;
     	}
@@ -33,6 +33,7 @@ public class BinarySearchDeluxe {
     			low = mid;
     		}
     	}
+        
     	if (comparator.compare(key, a[low]) == 0) {
     		return low;
     	}
@@ -47,28 +48,31 @@ public class BinarySearchDeluxe {
     /* Returns the index of the last key in a[] that equals the search key, or -1 
     if no such key. */
     public static <Key> int lastIndexOf(Key[] a, Key key, Comparator<Key> comparator){
+        //throws null pointer exception if there is no key or comparator
         if (a == null || key == null || comparator == null) {
     		throw new java.lang.NullPointerException();
     	}
+        
     	if (a == null || a.length == 0) {
     		return -1;
     	}
-    	int x = 0;
-    	int y = a.length - 1;
-    	while (x + 1 < y) {
-    		int mid = x + (y - x)/2;
+    	int low = 0;
+    	int high = a.length - 1;
+    	while (low + 1 < high) {
+    		int mid = low + (high - low)/2;
     		if (comparator.compare(key, a[mid]) < 0) {
-    			y = mid;
+    			high = mid;
     		} else {
-    			x = mid;
+    			low = mid;
     		}
     	}
-    	if (comparator.compare(key, a[y]) == 0) {
-    		return y;
-    	}
-    	if (comparator.compare(key, a[x]) == 0) {
-    		return x;
-    	}
-    	return -1;
+    	if (comparator.compare(key, a[high]) == 0) {
+    		return high;
+    	}else if (comparator.compare(key, a[low]) == 0) {
+    		return low;
+    	}else{
+            return -1;
+        }
+    	
     }
 }
