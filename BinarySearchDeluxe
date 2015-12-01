@@ -22,24 +22,26 @@ public class BinarySearchDeluxe {
     	if (a.length == 0) {
     		return -1;
     	}
-    	int l = 0;
-    	int r = a.length - 1;
-    	//StdOut.println(r);
-    	while (l + 1 < r) {
-    		int mid = l + (r - l)/2;
+    	int low = 0;
+    	int high = a.length - 1;
+        
+    	while (low + 1 < high) {
+    		int mid = low + (high - low)/2;
     		if (comparator.compare(key, a[mid]) <= 0) {
-    			r = mid;
+    			high = mid;
     		} else {
-    			l = mid;
+    			low = mid;
     		}
     	}
-    	if (comparator.compare(key, a[l]) == 0) {
-    		return l;
+    	if (comparator.compare(key, a[low]) == 0) {
+    		return low;
     	}
-    	if (comparator.compare(key, a[r]) == 0) {
-    		return r;
-    	}
-    	return -1;
+        else if (comparator.compare(key, a[high]) == 0) {
+    		return high;
+    	}else{
+            return -1;
+        }
+    	
     }   
     
     /* Returns the index of the last key in a[] that equals the search key, or -1 
@@ -51,21 +53,21 @@ public class BinarySearchDeluxe {
     	if (a == null || a.length == 0) {
     		return -1;
     	}
-    	int l = 0;
-    	int r = a.length - 1;
-    	while (l + 1 < r) {
-    		int mid = l + (r - l)/2;
+    	int x = 0;
+    	int y = a.length - 1;
+    	while (x + 1 < y) {
+    		int mid = x + (y - x)/2;
     		if (comparator.compare(key, a[mid]) < 0) {
-    			r = mid;
+    			y = mid;
     		} else {
-    			l = mid;
+    			x = mid;
     		}
     	}
-    	if (comparator.compare(key, a[r]) == 0) {
-    		return r;
+    	if (comparator.compare(key, a[y]) == 0) {
+    		return y;
     	}
-    	if (comparator.compare(key, a[l]) == 0) {
-    		return l;
+    	if (comparator.compare(key, a[x]) == 0) {
+    		return x;
     	}
     	return -1;
     }
