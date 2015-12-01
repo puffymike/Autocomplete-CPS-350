@@ -32,6 +32,7 @@ public class Autocomplete {
      of weight. */
 
     public Term[] allMatches(String prefix) {
+        //Throws null pointer exception if there are no terms to be found
         if (prefix == null) {
             throw new java.lang.NullPointerException();
         }
@@ -52,6 +53,7 @@ public class Autocomplete {
 
     // Return the number of terms that start with the given prefix.
     public int numberOfMatches(String prefix) {
+        //Will throw a null pointer exception if no prefix is declared
         if (prefix == null) {
             throw new java.lang.NullPointerException();
         }
@@ -87,14 +89,15 @@ public class Autocomplete {
         /* read in user queries from standard input and print out the top k matching terms */
         int k = Integer.parseInt(args[1]);
         Scanner stdIn = new Scanner(System.in);
+        In cin = new In(stdIn);
         Autocomplete autocomplete = new Autocomplete(terms);
-        while (stdIn.hasNextLine()) {
-            String prefix = stdIn.next(); //read in user input (i.e., prefix)       
+        
+        while (cin.hasNextLine()) {
+            String prefix = cin.readLine(); //read in user input (i.e., prefix)       
             Term[] results = autocomplete.allMatches(prefix);
             for (int i = 0; i < Math.min(k, results.length); i++) {
                 System.out.println(results[i]);
             }
         }
     }
-
 }
